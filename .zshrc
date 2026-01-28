@@ -4,7 +4,6 @@
 
 # Faster startup: cache completion
 autoload -Uz compinit promptinit
-
 if [[ ! -d "$HOME/.zcompdump" ]]; then
   compinit
 else
@@ -19,6 +18,7 @@ promptinit
 
 # Colors
 autoload -Uz colors && colors
+export COLORTERM=truecolor
 
 setopt PROMPT_SUBST
 
