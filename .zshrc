@@ -104,6 +104,12 @@ alias jwhub="nohup brave-browser --profile-directory=Default --app-id=mhncldkpgg
 alias github="nohup brave-browser --profile-directory=Default --app-id=mjoklplbddabcmpepnokjaffbmgbkkgg >/dev/null 2>&1 & disown"
 alias gemini="nohup brave-browser --profile-directory=Default --app-id=gdfaincndogidkdcdkhapmbffkckdkhn >/dev/null 2>&1 & disown"
 
+
+precmd() {
+    print
+}
+
+
 ##### -------------------------------
 ##### Cargo environment
 ##### -------------------------------
