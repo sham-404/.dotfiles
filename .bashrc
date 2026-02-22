@@ -124,3 +124,16 @@ echo $PATH | grep -Eq "(^|:)/usr/sbin(:|)" || PATH=$PATH:/usr/sbin
 
 . "$HOME/.cargo/env"
 export PATH="$HOME/zig:$PATH"
+
+# Oracle Instant Client
+export ORACLE_HOME=/opt/oracle/instantclient_21_21
+export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
+export PATH=$ORACLE_HOME:$PATH
+
+oracle() {
+  local pass
+  read -s -p "Enter Oracle password: " pass
+  echo
+  rlwrap -a -n --no-newline docker exec -it oracle-xe \
+    sqlplus "system/${pass}@XE"
+}

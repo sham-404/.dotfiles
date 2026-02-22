@@ -117,6 +117,12 @@ precmd() {
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 export PATH="$HOME/zig:$PATH"
 
+## Oracle Instant Client
+export ORACLE_HOME=/opt/oracle/instantclient_21_21
+export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
+export PATH=$ORACLE_HOME:$PATH#### Oracle environment
+
+
 ##### -------------------------------
 ##### Optional: enable if installed
 ##### -------------------------------
@@ -126,3 +132,16 @@ export PATH="$HOME/zig:$PATH"
 
 # Syntax highlighting (must be last)
 [[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+oracle() {
+  local pass
+
+  read -s "pass?Enter Oracle password: "
+  echo
+
+  # Tell user how to paste
+  echo "TIP: Use Ctrl+Shift+V → Enter, or run: sqlpaste"
+
+  rlwrap -a -n -A docker exec -it oracle-xe \
+    sqlplus "system/${pass}@XE"
+}
