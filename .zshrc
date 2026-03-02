@@ -103,6 +103,7 @@ alias discord="nohup brave-browser --profile-directory=Default --app-id=mfhpbolk
 alias jwhub="nohup brave-browser --profile-directory=Default --app-id=mhncldkpggffcpfbkfjkfhncedgghcih >/dev/null 2>&1 & disown"
 alias github="nohup brave-browser --profile-directory=Default --app-id=mjoklplbddabcmpepnokjaffbmgbkkgg >/dev/null 2>&1 & disown"
 alias gemini="nohup brave-browser --profile-directory=Default --app-id=gdfaincndogidkdcdkhapmbffkckdkhn >/dev/null 2>&1 & disown"
+alias vpn="~/scripts/vpn.sh"
 
 
 precmd() {
@@ -135,13 +136,8 @@ export PATH=$ORACLE_HOME:$PATH#### Oracle environment
 
 oracle() {
   local pass
-
   read -s "pass?Enter Oracle password: "
   echo
-
-  # Tell user how to paste
-  echo "TIP: Use Ctrl+Shift+V → Enter, or run: sqlpaste"
-
-  rlwrap -a -n -A docker exec -it oracle-xe \
-    sqlplus "system/${pass}@XE"
-}
+  # rlwrap -a -N -O '^SQL> $' -w -1 docker exec -i oracle-xe sh -c "sqlplus system/${pass}@XE"   
+  docker exec -it oracle-xe sqlplus system/${pass}@XE   
+}   
