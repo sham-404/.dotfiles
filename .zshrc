@@ -103,7 +103,10 @@ alias discord="nohup brave-browser --profile-directory=Default --app-id=mfhpbolk
 alias jwhub="nohup brave-browser --profile-directory=Default --app-id=mhncldkpggffcpfbkfjkfhncedgghcih >/dev/null 2>&1 & disown"
 alias github="nohup brave-browser --profile-directory=Default --app-id=mjoklplbddabcmpepnokjaffbmgbkkgg >/dev/null 2>&1 & disown"
 alias gemini="nohup brave-browser --profile-directory=Default --app-id=gdfaincndogidkdcdkhapmbffkckdkhn >/dev/null 2>&1 & disown"
+
 alias vpn="~/scripts/vpn.sh"
+alias gitman="~/coding/gitman/target/debug/gitman"
+alias calc="~/coding/calc/target/debug/calc"
 
 
 precmd() {
