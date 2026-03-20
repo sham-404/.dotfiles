@@ -144,3 +144,18 @@ oracle() {
   # rlwrap -a -N -O '^SQL> $' -w -1 docker exec -i oracle-xe sh -c "sqlplus system/${pass}@XE"   
   docker exec -it oracle-xe sqlplus system/${pass}@XE   
 }   
+
+to-mp4() {
+    if [[ $# -ne 2 ]]; then
+        echo "Usage: to-mp4 input.mkv output.mp4"
+        return 1
+    fi
+
+    ffmpeg -hide_banner -loglevel error -stats \
+        -i "$1" \
+        -map 0 \
+        -c:v libx264 -crf 23 -preset medium \
+        -c:a aac -b:a 128k \
+        -movflags +faststart \
+        "$2"
+}
