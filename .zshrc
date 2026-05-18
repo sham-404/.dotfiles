@@ -79,10 +79,6 @@ path=(
 
 export PATH
 
-export JAVA_HOME=/usr/lib/jvm/jdk-21.0.4+7
-export ANDROID_HOME=$HOME/Android
-export CHROME_EXECUTABLE=/usr/bin/chromium
-
 ##### -------------------------------
 ##### Aliases
 ##### -------------------------------
@@ -126,6 +122,18 @@ export ORACLE_HOME=/opt/oracle/instantclient_21_21
 export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
 export PATH=$ORACLE_HOME:$PATH#### Oracle environment
 
+## Android sdk paths 
+export ANDROID_SDK_ROOT=$HOME/android-sdk
+export ANDROID_NDK_ROOT=$HOME/android-sdk/ndk/25.1.8937393
+export ANDROID_HOME=$HOME/android-sdk
+export NDK_HOME=$HOME/android-sdk/ndk/25.1.8937393
+
+export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+
+## Java paths
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export PATH=$JAVA_HOME/bin:$PATH
 
 ##### -------------------------------
 ##### Optional: enable if installed
@@ -159,3 +167,4 @@ to-mp4() {
         -movflags +faststart \
         "$2"
 }
+export PATH=$PATH:/usr/games
