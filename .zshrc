@@ -1,39 +1,31 @@
-##### -------------------------------
-##### Core initialization
-##### -------------------------------
+autoload -Uz compinit promptinit colors
 
-# Faster startup: cache completion
-autoload -Uz compinit promptinit
-if [[ ! -d "$HOME/.zcompdump" ]]; then
-  compinit
+if [[ ! -f "$HOME/.zcompdump" ]]; then
+    compinit
 else
-  compinit -C
+    compinit -C
 fi
 
 promptinit
+colors
 
-##### -------------------------------
-##### Prompt: clean + git aware
-##### -------------------------------
-
-# Colors
-autoload -Uz colors && colors
 export COLORTERM=truecolor
+
+typeset -U path PATH
 
 setopt PROMPT_SUBST
 
 git_prompt() {
-  git rev-parse --is-inside-work-tree &>/dev/null || return
-  local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
-  [[ -n $branch ]] && echo "%F{magenta}[$branch]%f"
+    git rev-parse --is-inside-work-tree &>/dev/null || return
+    local branch
+    branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+    [[ -n $branch ]] && echo "%F{magenta}[$branch]%f"
 }
 
 PROMPT='%F{cyan}%n@%m%f %F{yellow}%~%f $(git_prompt)
 %F{green}❯%f '
 
-##### -------------------------------
-##### History: shared, clean, useful
-##### -------------------------------
+precmd() { print }
 
 HISTSIZE=5000
 SAVEHIST=5000
@@ -44,16 +36,7 @@ setopt histignorealldups
 setopt histreduceblanks
 setopt incappendhistory
 
-##### -------------------------------
-##### Keybindings
-##### -------------------------------
-
-# Emacs keys (change to -v if you want vim mode)
 bindkey -e
-
-##### -------------------------------
-##### Completion styling
-##### -------------------------------
 
 zstyle ':completion:*' menu select
 zstyle ':completion:*' group-name ''
@@ -62,34 +45,41 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 eval "$(dircolors -b)"
 
-##### -------------------------------
-##### PATH: clean and deduplicated
-##### -------------------------------
+export ORACLE_HOME=/opt/oracle/instantclient_21_21
+
+export ANDROID_SDK_ROOT=$HOME/android-sdk
+export ANDROID_HOME=$ANDROID_SDK_ROOT
+export ANDROID_NDK_ROOT=$ANDROID_SDK_ROOT/ndk/25.1.8937393
+export NDK_HOME=$ANDROID_NDK_ROOT
+
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+
+export LD_LIBRARY_PATH="$ORACLE_HOME:$LD_LIBRARY_PATH"
 
 path=(
-  $HOME/.local/bin
-  $HOME/dev/flutter/bin
-  /opt/nvim-linux-x86_64/bin
-  $HOME/Android/platform-tools
-  $HOME/Android/cmdline-tools/latest/bin
-  /usr/sbin
-  /sbin
-  $path
+    $HOME/.local/bin
+    $HOME/dev/flutter/bin
+    /opt/nvim-linux-x86_64/bin
+    $HOME/zig
+    $HOME/Android/platform-tools
+    $HOME/Android/cmdline-tools/latest/bin
+    $JAVA_HOME/bin
+    $ORACLE_HOME
+    /usr/games
+    /usr/sbin
+    /sbin
+    $path
 )
 
 export PATH
 
-##### -------------------------------
-##### Aliases
-##### -------------------------------
+eval "$(zoxide init zsh)"
+
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+[[ -f "$HOME/.local/share/../bin/env" ]] && source "$HOME/.local/share/../bin/env"
 
 alias volume="pactl set-sink-volume @DEFAULT_SINK@"
-
 alias brave="brave-browser"
-
-alias neovide="NVIM_APPNAME=nvim-blaze $HOME/Downloads/Neovide/neovide.AppImage"
-alias nvchad="NVIM_APPNAME=nvim-nvchad nvim"
-alias blaze="NVIM_APPNAME=nvim-blaze nvim"
 alias vim="NVIM_APPNAME=nvim-min nvim"
 
 alias chatgpt="nohup brave-browser --profile-directory=Default --app-id=cadlkienfkclaiaibeoongdcgmdikeeg >/dev/null 2>&1 & disown"
@@ -104,60 +94,24 @@ alias vpn="~/scripts/vpn.sh"
 alias gitman="~/coding/gitman/target/debug/gitman"
 alias calc="~/coding/calc/target/debug/calc"
 
+[[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
+    source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-precmd() {
-    print
-}
-
-
-##### -------------------------------
-##### Cargo environment
-##### -------------------------------
-
-[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
-export PATH="$HOME/zig:$PATH"
-
-## Oracle Instant Client
-export ORACLE_HOME=/opt/oracle/instantclient_21_21
-export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
-export PATH=$ORACLE_HOME:$PATH#### Oracle environment
-
-## Android sdk paths 
-export ANDROID_SDK_ROOT=$HOME/android-sdk
-export ANDROID_NDK_ROOT=$HOME/android-sdk/ndk/25.1.8937393
-export ANDROID_HOME=$HOME/android-sdk
-export NDK_HOME=$HOME/android-sdk/ndk/25.1.8937393
-
-export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
-export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
-
-## Java paths
-export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-export PATH=$JAVA_HOME/bin:$PATH
-
-##### -------------------------------
-##### Optional: enable if installed
-##### -------------------------------
-
-# Autosuggestions
-[[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# Syntax highlighting (must be last)
-[[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
+    source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 oracle() {
-  local pass
-  read -s "pass?Enter Oracle password: "
-  echo
-  # rlwrap -a -N -O '^SQL> $' -w -1 docker exec -i oracle-xe sh -c "sqlplus system/${pass}@XE"   
-  docker exec -it oracle-xe sqlplus system/${pass}@XE   
-}   
+    local pass
+    read -s "pass?Enter Oracle password: "
+    echo
+    docker exec -it oracle-xe sqlplus system/${pass}@XE
+}
 
 to-mp4() {
-    if [[ $# -ne 2 ]]; then
+    [[ $# -eq 2 ]] || {
         echo "Usage: to-mp4 input.mkv output.mp4"
         return 1
-    fi
+    }
 
     ffmpeg -hide_banner -loglevel error -stats \
         -i "$1" \
@@ -167,4 +121,3 @@ to-mp4() {
         -movflags +faststart \
         "$2"
 }
-export PATH=$PATH:/usr/games

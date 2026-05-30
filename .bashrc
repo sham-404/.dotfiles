@@ -137,3 +137,5 @@ oracle() {
   rlwrap -a -n --no-newline docker exec -it oracle-xe \
     sqlplus "system/${pass}@XE"
 }
+
+. "$HOME/.local/share/../bin/env"
