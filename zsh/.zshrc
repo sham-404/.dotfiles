@@ -94,11 +94,22 @@ alias vpn="~/scripts/vpn.sh"
 alias gitman="~/coding/gitman/target/debug/gitman"
 alias calc="~/coding/calc/target/debug/calc"
 
-[[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
+# zsh-autosuggestions
+if [[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#4C566A'
     source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
-[[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
+# zsh-syntax-highlighting
+if [[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
     source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+    ZSH_HIGHLIGHT_STYLES[command]='fg=#88C0D0'
+    ZSH_HIGHLIGHT_STYLES[alias]='fg=#B48EAD'
+    ZSH_HIGHLIGHT_STYLES[path]='fg=#A3BE8C'
+    ZSH_HIGHLIGHT_STYLES[globbing]='fg=#EBCB8B'
+    ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#BF616A,bold'
+fi
 
 oracle() {
     local pass
@@ -121,3 +132,6 @@ to-mp4() {
         -movflags +faststart \
         "$2"
 }
+
+# opencode
+export PATH=/home/sham_404/.opencode/bin:$PATH
