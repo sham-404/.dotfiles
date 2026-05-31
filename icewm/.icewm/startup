@@ -1,0 +1,5 @@
+#!/bin/bash
+#Check localization of Zzz File Manager:r:
+if [ ! -f ~/.config/zzzfm/zzzfm_already_localized ]; then zzzfmlocalize ; fi
+pgrep -x picom >/dev/null || picom --experimental-backends &
+
