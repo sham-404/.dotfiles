@@ -127,7 +127,7 @@ key "Super+n" bash -lc /home/sham_404/scripts/launch_blaze.sh
 
 key "Super+b" bash -lc brave-browser
 
-key "Ctrl+Alt+t" alacritty
+key "Ctrl+Alt+t" /home/sham_404/scripts/init_term.sh
 
 key "Ctrl+Super+v" /home/sham_404/scripts/linepaste.sh
 
