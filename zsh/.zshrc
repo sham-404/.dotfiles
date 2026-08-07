@@ -91,8 +91,8 @@ alias github="nohup brave-browser --profile-directory=Default --app-id=mjoklplbd
 alias gemini="nohup brave-browser --profile-directory=Default --app-id=gdfaincndogidkdcdkhapmbffkckdkhn >/dev/null 2>&1 & disown"
 
 alias vpn="~/scripts/vpn.sh"
-alias gitman="~/coding/gitman/target/debug/gitman"
-alias calc="~/coding/calc/target/debug/calc"
+alias gitman="~/coding/gitman/target/release/gitman"
+alias calc="~/coding/calc/target/release/calc"
 
 # zsh-autosuggestions
 if [[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
