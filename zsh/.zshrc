@@ -10,6 +10,8 @@ promptinit
 colors
 
 export COLORTERM=truecolor
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 typeset -U path PATH
 
@@ -67,6 +69,7 @@ path=(
     $ORACLE_HOME
     /usr/games
     /usr/sbin
+    /usr/scripts
     /sbin
     $path
 )
