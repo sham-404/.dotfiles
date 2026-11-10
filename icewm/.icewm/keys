@@ -131,7 +131,8 @@ key "Ctrl+Alt+t" /home/sham_404/scripts/init_term.sh
 
 key "Ctrl+Super+v" /home/sham_404/scripts/linepaste.sh
 
-key "Super+Space" bash -lc "rofi -show drun -show-icons"
+key "Super+Space" ~/.config/rofi/launchers/type-1/launcher.sh
+key "Super+l" ~/.config/rofi/powermenu/type-1/powermenu.sh
 
 key "Print" sh -c 'maim $HOME/Pictures/full_$(date +%Y-%m-%d-%H%M%S).png'
 key "Shift+Print" sh -c 'maim -s $HOME/Pictures/area_$(date +%Y-%m-%d-%H%M%S).png'
