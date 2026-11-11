@@ -8,7 +8,7 @@
 
 configuration {
 	/*---------- General setting ----------*/
-	modi: "drun,run";
+	modi: "drun,run,filebrowser,window";
 	case-sensitive: false;
 	cycle: true;
 	filter: "";
@@ -21,7 +21,7 @@ configuration {
 /*	dpi: -1;*/
 
 	/*---------- Matching setting ----------*/
-	matching: "fuzzy";
+	matching: "normal";
 	tokenize: true;
 
 	/*---------- SSH settings ----------*/
@@ -51,13 +51,10 @@ configuration {
 	run-shell-command: "{terminal} -e {cmd}";
 
 	/*---------- Fallback Icon ----------*/
-	run {
+	run,drun {
 		fallback-icon: "application-x-addon";
 	}
 
-	drun {
-		fallback-icon: "application-x-addon";
-	}
 	/*---------- Window switcher settings ----------*/
 	window-match-fields: "title,class,role,name,desktop";
 	window-command: "wmctrl -i -R {window}";
@@ -71,8 +68,8 @@ configuration {
 
 	/*---------- History and Sorting ----------*/
 	disable-history: false;
-	sorting-method: "fzf";
-	max-history-size: 50;
+	sorting-method: "normal";
+	max-history-size: 25;
 
 	/*---------- Display setting ----------*/
 	display-window: "Windows";
@@ -87,7 +84,7 @@ configuration {
 	/*---------- Misc setting ----------*/
 	terminal: "rofi-sensible-terminal";
 	font: "Mono 12";
-	sort: true;
+	sort: false;
 	threads: 0;
 	click-to-exit: true;
 /*	ignored-prefixes: "";*/
@@ -182,7 +179,4 @@ configuration {
 	me-accept-custom: "Control+MouseDPrimary";
 */
 }
-//@theme "/usr/share/rofi/themes/arthur.rasi"
-//@theme "/usr/share/rofi/themes/DarkBlue.rasi"
-//@theme "/usr/share/rofi/themes/arthur.rasi"
 @theme "/usr/share/rofi/themes/android_notification.rasi"
